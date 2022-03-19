@@ -19,7 +19,15 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-        
+       
+    
+    /**
+     * Main method so that game can be run outside of Bluej.
+     */
+    public static void main(String[] args){
+        Game game = new Game();
+        game.play();
+    }
     /**
      * Create the game and initialise its internal map.
      */
@@ -35,7 +43,7 @@ public class Game
     private void createRooms()
     {
         Room outside, theater, pub, lab, office, cafeteria, water_closet,
-        janitor_closet, kitchen;
+        janitor_closet, kitchen, hallway, parking_lot;
       
         // create the rooms
         outside = new Room("outside the main entrance of the university");
@@ -47,11 +55,16 @@ public class Game
         water_closet = new Room("in the water closet");
         janitor_closet = new Room("in the janitor closet");
         kitchen = new Room("in the kitchen");
+        parking_lot = new Room("in the parking lot");
+        hallway = new Room("in the hallway");
         
         // initialise room exits
         outside.setExit("east", theater);
         outside.setExit("south", lab);
         outside.setExit("west", pub);
+        outside.setExit("north", parking_lot);
+        
+        parking_lot.setExit("south", outside);
 
         theater.setExit("west", outside);
 
@@ -60,20 +73,26 @@ public class Game
         lab.setExit("north", outside);
         lab.setExit("east", office);
         lab.setExit("west", cafeteria);
+        lab.setExit("south", hallway);
+        
+        hallway.setExit("north", lab);
+        hallway.setExit("west", water_closet);
 
         office.setExit("west", lab);
         
         cafeteria.setExit("west", kitchen);
         cafeteria.setExit("south", water_closet);
+        cafeteria.setExit("east", lab);
         
         kitchen.setExit("east", cafeteria);
-        kitchen.setExit("north", janitor_closet);
+        kitchen.setExit("south", janitor_closet);
         
-        janitor_closet.setExit("south", kitchen);
+        janitor_closet.setExit("north", kitchen);
         janitor_closet.setExit("east", water_closet);
         
         water_closet.setExit("west", janitor_closet);
-        water_closet.setExit("south", cafeteria);
+        water_closet.setExit("north", cafeteria);
+        water_closet.setExit("east", hallway);
 
         currentRoom = outside;  // start game outside
     }
