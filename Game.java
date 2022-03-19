@@ -19,7 +19,6 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-       
     
     /**
      * Main method so that game can be run outside of Bluej.
@@ -43,7 +42,8 @@ public class Game
     private void createRooms()
     {
         Room outside, theater, pub, lab, office, cafeteria, water_closet,
-        janitor_closet, kitchen, hallway, parking_lot;
+        janitor_closet, kitchen, hallway, parking_lot, gymnasium, 
+        auditorium;
       
         // create the rooms
         outside = new Room("outside the main entrance of the university");
@@ -57,6 +57,8 @@ public class Game
         kitchen = new Room("in the kitchen");
         parking_lot = new Room("in the parking lot");
         hallway = new Room("in the hallway");
+        gymnasium = new Room("in the gymnasium");
+        auditorium = new Room("in the auditorium");
         
         // initialise room exits
         outside.setExit("east", theater);
@@ -77,6 +79,8 @@ public class Game
         
         hallway.setExit("north", lab);
         hallway.setExit("west", water_closet);
+        hallway.setExit("south", gymnasium);
+        hallway.setExit("east", auditorium);
 
         office.setExit("west", lab);
         
@@ -93,6 +97,9 @@ public class Game
         water_closet.setExit("west", janitor_closet);
         water_closet.setExit("north", cafeteria);
         water_closet.setExit("east", hallway);
+        
+        gymnasium.setExit("north", hallway);
+        auditorium.setExit("west", hallway);
 
         currentRoom = outside;  // start game outside
     }
