@@ -11,8 +11,8 @@
  *  rooms, creates the parser and starts the game.  It also evaluates and
  *  executes the commands that the parser returns.
  * 
- * @author  Michael Kölling and David J. Barnes
- * @version 2016.02.29
+ * @author  Ryan Rutishauser
+ * @version 2022.03.19
  */
 
 public class Game 
@@ -34,7 +34,8 @@ public class Game
      */
     private void createRooms()
     {
-        Room outside, theater, pub, lab, office;
+        Room outside, theater, pub, lab, office, cafeteria, water_closet,
+        janitor_closet, kitchen;
       
         // create the rooms
         outside = new Room("outside the main entrance of the university");
@@ -42,6 +43,10 @@ public class Game
         pub = new Room("in the campus pub");
         lab = new Room("in a computing lab");
         office = new Room("in the computing admin office");
+        cafeteria = new Room("in the cafeteria");
+        water_closet = new Room("in the water closet");
+        janitor_closet = new Room("in the janitor closet");
+        kitchen = new Room("in the kitchen");
         
         // initialise room exits
         outside.setExit("east", theater);
@@ -54,8 +59,21 @@ public class Game
 
         lab.setExit("north", outside);
         lab.setExit("east", office);
+        lab.setExit("west", cafeteria);
 
         office.setExit("west", lab);
+        
+        cafeteria.setExit("west", kitchen);
+        cafeteria.setExit("south", water_closet);
+        
+        kitchen.setExit("east", cafeteria);
+        kitchen.setExit("north", janitor_closet);
+        
+        janitor_closet.setExit("south", kitchen);
+        janitor_closet.setExit("east", water_closet);
+        
+        water_closet.setExit("west", janitor_closet);
+        water_closet.setExit("south", cafeteria);
 
         currentRoom = outside;  // start game outside
     }

@@ -1,5 +1,5 @@
 Project: zuul-with-enums-v2
-Authors: Michael Kölling and David J. Barnes
+Authors: Ryan Rutishauser
 
 This project is part of the material for the book
 
