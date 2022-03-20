@@ -60,7 +60,7 @@ public class Game
         gymnasium = new Room("in the gymnasium");
         auditorium = new Room("in the auditorium");
         locker_room = new Room("in the locker room");
-        locker = new Room("locked yourself in a locker");
+        locker = new Room("locked in a locker");
         
         // initialise room exits
         outside.setExit("east", theater);
@@ -173,6 +173,10 @@ public class Game
             case LOOK:
                 look(command);
                 break;
+            
+            case EAT:
+                eat(command);
+                break;
         }
         return wantToQuit;
     }
@@ -240,5 +244,13 @@ public class Game
     private void look(Command command) 
     {
         System.out.println(currentRoom.getLongDescription());
+    }
+    /** 
+     * "Eat" was entered. This command allows the player to eat food and 
+     * satisfy his hunger.
+     */
+    private void eat(Command command) 
+    {
+        System.out.println("You have eaten and are not hungry anymore.");
     }
 }
