@@ -43,7 +43,7 @@ public class Game
     {
         Room outside, theater, pub, lab, office, cafeteria, water_closet,
         janitor_closet, kitchen, hallway, parking_lot, gymnasium, 
-        auditorium;
+        auditorium, locker_room, locker;
       
         // create the rooms
         outside = new Room("outside the main entrance of the university");
@@ -59,6 +59,8 @@ public class Game
         hallway = new Room("in the hallway");
         gymnasium = new Room("in the gymnasium");
         auditorium = new Room("in the auditorium");
+        locker_room = new Room("in the locker room");
+        locker = new Room("locked yourself in a locker");
         
         // initialise room exits
         outside.setExit("east", theater);
@@ -99,7 +101,12 @@ public class Game
         water_closet.setExit("east", hallway);
         
         gymnasium.setExit("north", hallway);
+        gymnasium.setExit("east", locker_room);
+        
         auditorium.setExit("west", hallway);
+        
+        locker_room.setExit("west", gymnasium);
+        locker_room.setExit("east", locker);
 
         currentRoom = outside;  // start game outside
     }
