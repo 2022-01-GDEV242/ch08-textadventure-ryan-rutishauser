@@ -19,6 +19,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
+    private Item[] inventory;
     
     /**
      * Main method so that game can be run outside of Bluej.
@@ -34,16 +35,20 @@ public class Game
     {
         createRooms();
         parser = new Parser();
+        inventory = new Item[2];
     }
 
     /**
      * Create all the rooms and link their exits together.
+     * Also creates all items and links them to rooms.
      */
     private void createRooms()
     {
         Room outside, theater, pub, lab, office, cafeteria, water_closet,
         janitor_closet, kitchen, hallway, parking_lot, gymnasium, 
         auditorium, locker_room, locker;
+        
+        Item key;
       
         // create the rooms
         outside = new Room("outside the main entrance of the university");
@@ -61,6 +66,8 @@ public class Game
         auditorium = new Room("in the auditorium");
         locker_room = new Room("in the locker room");
         locker = new Room("locked in a locker");
+        
+        key = new Item("This is a key. This may be useful in the future", 1);
         
         // initialise room exits
         outside.setExit("east", theater);
@@ -95,6 +102,7 @@ public class Game
         
         janitor_closet.setExit("north", kitchen);
         janitor_closet.setExit("east", water_closet);
+        janitor_closet.setItem(key);
         
         water_closet.setExit("west", janitor_closet);
         water_closet.setExit("north", cafeteria);
@@ -109,6 +117,7 @@ public class Game
         locker_room.setExit("east", locker);
 
         currentRoom = outside;  // start game outside
+        
     }
 
     /**
