@@ -43,7 +43,6 @@ public class Room
     if (name != null){
     items.add(name);    
     }   
-    
     }
 
     /**

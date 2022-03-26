@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Random;
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -20,6 +22,7 @@ public class Game
     private Parser parser;
     private Room currentRoom;
     private Item[] inventory;
+    private Random randomizer;
     
     /**
      * Main method so that game can be run outside of Bluej.
@@ -44,6 +47,10 @@ public class Game
      */
     private void createRooms()
     {
+        ArrayList<Room> rooms = new ArrayList<>();
+        
+        randomizer = new Random();
+        
         Room outside, theater, pub, lab, office, cafeteria, water_closet,
         janitor_closet, kitchen, hallway, parking_lot, gymnasium, 
         auditorium, locker_room, locker;
@@ -52,20 +59,35 @@ public class Game
       
         // create the rooms
         outside = new Room("outside the main entrance of the university");
+        rooms.add(outside);
         theater = new Room("in a lecture theater");
+        rooms.add(theater);
         pub = new Room("in the campus pub");
+        rooms.add(pub);
         lab = new Room("in a computing lab");
+        rooms.add(lab);
         office = new Room("in the computing admin office");
+        rooms.add(office);
         cafeteria = new Room("in the cafeteria");
+        rooms.add(cafeteria);
         water_closet = new Room("in the water closet");
+        rooms.add(water_closet);
         janitor_closet = new Room("in the janitor closet");
+        rooms.add(janitor_closet);
         kitchen = new Room("in the kitchen");
+        rooms.add(kitchen);
         parking_lot = new Room("in the parking lot");
+        rooms.add(parking_lot);
         hallway = new Room("in the hallway");
+        rooms.add(hallway);
         gymnasium = new Room("in the gymnasium");
+        rooms.add(gymnasium);
         auditorium = new Room("in the auditorium");
+        rooms.add(auditorium);
         locker_room = new Room("in the locker room");
+        rooms.add(locker_room);
         locker = new Room("locked in a locker");
+        rooms.add(locker);
         
         key = new Item("This is a key. This may be useful in the future", 1);
         
@@ -115,9 +137,9 @@ public class Game
         
         locker_room.setExit("west", gymnasium);
         locker_room.setExit("east", locker);
+        locker_room.setExit("south", rooms.get(randomizer.nextInt(rooms.size())));
 
         currentRoom = outside;  // start game outside
-        
     }
 
     /**
