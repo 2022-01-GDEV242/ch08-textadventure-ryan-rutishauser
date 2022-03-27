@@ -21,8 +21,8 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-    private ArrayList<Item> inventory;
     private Random randomizer;
+    private ArrayList<Item> inventory;
     private int health;
     
     /**
@@ -50,7 +50,6 @@ public class Game
     private void createRooms()
     {
         ArrayList<Room> rooms = new ArrayList<>();
-        
         randomizer = new Random();
         
         Room outside, theater, pub, lab, office, cafeteria, water_closet,
@@ -145,7 +144,7 @@ public class Game
 
         currentRoom = outside;  // start game outside
     }
-
+    
     /**
      *  Main play routine.  Loops until end of play.
      */
