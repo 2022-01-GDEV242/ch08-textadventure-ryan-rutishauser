@@ -44,6 +44,42 @@ public class Room
     items.add(name);    
     }   
     }
+    
+    /**
+     * Allows items to be associated with rooms.
+     * @param name of item being passed in.
+     */
+    public ArrayList getItem(){
+    return items;
+    }
+    
+    /**
+     * Allows items to be associated with rooms.
+     * @param name of item being passed in.
+     */
+    public void removeItem(){
+        items.clear();
+    }
+
+    
+    /**
+     * Allows items to be associated with rooms.
+     * @param name of item being passed in.
+     */
+    public int numberItem(){
+    return items.size();
+    }
+    
+    /**
+     * Allows items to be associated with rooms.
+     * @param name of item being passed in.
+     */
+    public void printItem(){
+    for(Item i: items){
+        System.out.println(i.getDescription() + ". The weight of the " +
+        "item is " + i.getWeight());
+    }
+    }
 
     /**
      * Define an exit from this room.
@@ -73,7 +109,7 @@ public class Room
     public String getLongDescription()
     {
         return "You are " + description + ".\n" + getExitString();
-    }
+    } 
 
     /**
      * Return a string describing the room's exits, for example

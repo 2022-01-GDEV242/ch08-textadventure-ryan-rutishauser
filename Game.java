@@ -21,8 +21,9 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-    private Item[] inventory;
+    private ArrayList<Item> inventory;
     private Random randomizer;
+    private int health;
     
     /**
      * Main method so that game can be run outside of Bluej.
@@ -38,7 +39,8 @@ public class Game
     {
         createRooms();
         parser = new Parser();
-        inventory = new Item[2];
+        inventory = new ArrayList<>();
+        health = 0;
     }
 
     /**
@@ -55,7 +57,7 @@ public class Game
         janitor_closet, kitchen, hallway, parking_lot, gymnasium, 
         auditorium, locker_room, locker;
         
-        Item key;
+        Item apple, orange;
       
         // create the rooms
         outside = new Room("outside the main entrance of the university");
@@ -89,7 +91,8 @@ public class Game
         locker = new Room("locked in a locker");
         rooms.add(locker);
         
-        key = new Item("This is a key. This may be useful in the future", 1);
+        apple = new Item("This is an apple. This can be eaten to improve your health", 1);
+        orange = new Item("This is an orange. This can be eaten to improve your health", 1);
         
         // initialise room exits
         outside.setExit("east", theater);
@@ -118,13 +121,14 @@ public class Game
         cafeteria.setExit("west", kitchen);
         cafeteria.setExit("south", water_closet);
         cafeteria.setExit("east", lab);
+        cafeteria.setItem(orange);
         
         kitchen.setExit("east", cafeteria);
         kitchen.setExit("south", janitor_closet);
         
         janitor_closet.setExit("north", kitchen);
         janitor_closet.setExit("east", water_closet);
-        janitor_closet.setItem(key);
+        janitor_closet.setItem(apple);
         
         water_closet.setExit("west", janitor_closet);
         water_closet.setExit("north", cafeteria);
@@ -204,6 +208,10 @@ public class Game
             case LOOK:
                 look(command);
                 break;
+                
+            case GET:
+                get(command);
+                break;
             
             case EAT:
                 eat(command);
@@ -251,6 +259,7 @@ public class Game
         else {
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
+            currentRoom.printItem();
         }
     }
 
@@ -277,11 +286,39 @@ public class Game
         System.out.println(currentRoom.getLongDescription());
     }
     /** 
+     * "Look" was entered. This prints the exits of the room for the player.
+     */
+    private void get(Command command) 
+    {
+        ArrayList<Item> playInventory;
+        playInventory = new ArrayList<>();
+        if(currentRoom.numberItem() == 0){
+        System.out.println("There are no items in this room.");
+        }
+        else{
+        playInventory = currentRoom.getItem();  
+        for(Item i: playInventory){
+        inventory.add(i); 
+        }
+        System.out.println("You have gotten the items in this room.");
+        currentRoom.removeItem();
+        }
+    }
+    /** 
      * "Eat" was entered. This command allows the player to eat food and 
-     * satisfy his hunger.
+     * satisfy his hunger. It increases health by 10 each time a food is
+     * eaten and removes the food from inventory.
      */
     private void eat(Command command) 
     {
-        System.out.println("You have eaten and are not hungry anymore.");
+        if (inventory.size() == 0){
+        System.out.println("You do not have any food.");
+        }
+        else{ 
+        System.out.println("Your health was " + health);
+        health += 10;
+        System.out.println("Your health is now " + health);
+        inventory.remove(0);
+        }
     }
-}
+    }
