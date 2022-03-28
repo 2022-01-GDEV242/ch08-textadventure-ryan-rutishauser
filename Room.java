@@ -39,23 +39,23 @@ public class Room
      * Allows items to be associated with rooms.
      * @param name of item being passed in.
      */
-    public void setItem(Item name){
-    if (name != null){
-    items.add(name);    
-    }   
+    public void setItem(Item item){
+        if (item != null){
+            items.add(item);    
+        }   
     }
     
     /**
      * @return arrayList of items room holds to be retreived.
      */
-    public ArrayList getItem(){
-    return items;
+    public ArrayList getItems(){
+        return items;
     }
     
     /**
      * Removes items from a room.
      */
-    public void removeItem(){
+    public void removeItems(){
         items.clear();
     }
 
@@ -64,17 +64,17 @@ public class Room
      * @return number of items a room contains.
      */
     public int numberItem(){
-    return items.size();
+        return items.size();
     }
     
     /**
      * Prints description and weight of item.
      */
     public void printItem(){
-    for(Item i: items){
-        System.out.println(i.getDescription() + ". The weight of the " +
-        "item is " + i.getWeight());
-    }
+        for(Item i: items){
+            System.out.println(i.getDescription() + ". The weight of the " +
+            "item is " + i.getWeight());
+        }
     }
 
     /**

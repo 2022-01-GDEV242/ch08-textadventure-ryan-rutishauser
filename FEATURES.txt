@@ -1,0 +1,13 @@
+Level B
+8.20/8.21 (p 308) - add items to your game. Each room can have one item in it. Items have description and weight. When printing room info, Item should be included
+8.22 (p 308)- make it so rooms can hold multiple items
+8.28-8.33  (p 314) -add a Player that can carry one or more objects according to the options presented
+Level A
+One way trap door. This is incorporated to the east of locker room. A room called locker has no escape. This cannot be transported out of either.
+Random transporter. Call transport command and you can transport in any room except locker
+Eat actually changes game state. Eat increases health by ten.
+
+Explanation
+get command allows an item in a room to be brought into the player’s inventory and removes it from the room.
+eat command increases health and removes item from player’s inventory.
+transport command allow you to randomly transport from any room except locker.

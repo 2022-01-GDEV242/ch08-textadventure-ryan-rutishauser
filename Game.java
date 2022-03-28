@@ -24,6 +24,8 @@ public class Game
     private Random randomizer;
     private ArrayList<Item> inventory;
     private int health;
+    private ArrayList<Room> rooms;
+    private Room locker;
     
     /**
      * Main method so that game can be run outside of Bluej.
@@ -49,14 +51,13 @@ public class Game
      */
     private void createRooms()
     {
-        ArrayList<Room> rooms = new ArrayList<>();
-        randomizer = new Random();
+        rooms = new ArrayList<>();
         
         Room outside, theater, pub, lab, office, cafeteria, water_closet,
         janitor_closet, kitchen, hallway, parking_lot, gymnasium, 
-        auditorium, locker_room, locker;
+        auditorium, locker_room;
         
-        Item apple, orange;
+        Item apple, orange, banana;
       
         // create the rooms
         outside = new Room("outside the main entrance of the university");
@@ -92,6 +93,7 @@ public class Game
         
         apple = new Item("This is an apple. This can be eaten to improve your health", 1);
         orange = new Item("This is an orange. This can be eaten to improve your health", 1);
+        banana = new Item("This is a banana. This can be eaten to improve your health", 1);
         
         // initialise room exits
         outside.setExit("east", theater);
@@ -121,6 +123,7 @@ public class Game
         cafeteria.setExit("south", water_closet);
         cafeteria.setExit("east", lab);
         cafeteria.setItem(orange);
+        cafeteria.setItem(banana);
         
         kitchen.setExit("east", cafeteria);
         kitchen.setExit("south", janitor_closet);
@@ -140,7 +143,6 @@ public class Game
         
         locker_room.setExit("west", gymnasium);
         locker_room.setExit("east", locker);
-        locker_room.setExit("south", rooms.get(randomizer.nextInt(rooms.size())));
 
         currentRoom = outside;  // start game outside
     }
@@ -215,6 +217,10 @@ public class Game
             case EAT:
                 eat(command);
                 break;
+                
+            case TRANSPORT:
+                transport(command);
+                break;
         }
         return wantToQuit;
     }
@@ -256,10 +262,18 @@ public class Game
             System.out.println("There is no door!");
         }
         else {
-            currentRoom = nextRoom;
-            System.out.println(currentRoom.getLongDescription());
-            currentRoom.printItem();
+            moveRoom(nextRoom);
         }
+    }
+    /**
+     * moves user from current room to next room.
+     * @param nextRoom room user will go next.
+     */
+    private void moveRoom(Room nextRoom)
+    {
+        currentRoom = nextRoom;
+        System.out.println(currentRoom.getLongDescription());
+        currentRoom.printItem();
     }
 
     /** 
@@ -285,22 +299,37 @@ public class Game
         System.out.println(currentRoom.getLongDescription());
     }
     /** 
-     * "Look" was entered. This prints the exits of the room for the player.
+     * "Transport" was entered. This sends user to random room.
+     */
+    private void transport(Command command) 
+    {
+        Room room;
+        if(currentRoom == locker){
+            System.out.println("You cannot transport out of a locker.");
+            return;
+        }
+        randomizer = new Random();
+        while(true){
+            room = rooms.get(randomizer.nextInt(rooms.size()));
+            if (room != currentRoom){
+                moveRoom(room);
+                return;
+            }
+        }
+    }
+    /** 
+     * "GET" was entered. This gets the item in the room.
      */
     private void get(Command command) 
     {
-        ArrayList<Item> playInventory;
-        playInventory = new ArrayList<>();
         if(currentRoom.numberItem() == 0){
-        System.out.println("There are no items in this room.");
+            System.out.println("There are no items in this room.");
         }
         else{
-        playInventory = currentRoom.getItem();  
-        for(Item i: playInventory){
-        inventory.add(i); 
-        }
-        System.out.println("You have gotten the items in this room.");
-        currentRoom.removeItem();
+            inventory.addAll(currentRoom.getItems());
+            
+            currentRoom.removeItems();
+            System.out.println("You have gotten the items in this room.");
         }
     }
     /** 
@@ -311,13 +340,13 @@ public class Game
     private void eat(Command command) 
     {
         if (inventory.size() == 0){
-        System.out.println("You do not have any food.");
+            System.out.println("You do not have any food.");
         }
         else{ 
-        System.out.println("Your health was " + health);
-        health += 10;
-        System.out.println("Your health is now " + health);
-        inventory.remove(0);
+            System.out.println("Your health was " + health);
+            health += 10;
+            System.out.println("Your health is now " + health);
+            inventory.remove(0);
         }
     }
     }

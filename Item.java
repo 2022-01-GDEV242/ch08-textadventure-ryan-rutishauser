@@ -1,14 +1,12 @@
 
 
 /**
- * Class Item - a room in an adventure game.
+ * Class Item - a item in an adventure game.
  *
  * This class is part of the "World of Zuul" application. 
  * "World of Zuul" is a very simple, text based adventure game.  
  *
- * A "Item" represents one location in the scenery of the game.  It is 
- * connected to other rooms via exits.  For each existing exit, the room 
- * stores a reference to the neighboring room.
+ * A "Item" represents one object in the scenery of the game. 
  * 
  * @author  Ryan Ruitshauser
  * @version 2022.03.21
